@@ -1,0 +1,144 @@
+<html>
+
+<head>
+        <style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+</style>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var nim= decodeURI(getUrlVars()["nim"]);
+        var nama = decodeURI(getUrlVars()["nama"]);
+        var email = decodeURI(getUrlVars()["email"]);
+        var telp = decodeURI(getUrlVars()["telp"]);
+        var alamat = decodeURI(getUrlVars()["alamat"]);
+        
+        $("#nim").val(nim);
+        $("#nama").val(nama);
+        $("#email").val(email);
+        $("#telp").val(telp);
+        $("#alamat").val(alamat);
+        
+        $("#update").click(function() {
+            var nim = $("#nim").val();
+            var nama = $("#nama").val();
+            var email = $("#email").val();
+            var telp = $("#telp").val();
+            var alamat = $("#alamat").val();
+            
+            var dataString = "nim=" + nim + "&nama=" + nama + "&email=" + email +"&telp=" + telp +  "&alamat=" + alamat +  "&update=";
+            $.ajax({
+                type: "POST",
+                url: "https://sisfopkl.000webhostapp.com/uas/cordova/www/updatemhs.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#update").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Updated");
+                        $("#update").val("Update");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+        $("#delete").click(function() {
+            var id_baak = $("#nim").val();
+            var dataString = "nim=" + id_baak + "&delete=";
+            $.ajax({
+                type: "GET",
+                url: "https://sisfopkl.000webhostapp.com/uas/cordova/www/deletemhs.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="readjsonpkl.html">Info PKL JSON</a></li>
+                        <li><a href="readjsondosen.html">Dosen JSON</a></li>
+                        <li><a href="readjsonmhs.html">Mahasiswa JSON</a></li>
+                        <li><a href="readjson.html">Baak JSON</a></li>
+</ul>
+  <center>
+    <h3>Data Mahasiswa</h3> </center>
+    <div class="list">
+       
+        <div class="item">
+            <label>NIM</label>
+            <input type="text" id="nim" value="" />
+        </div>
+        <div class="item">
+            <label>Nama</label>
+            <input type="text" id="nama" value="" />
+        </div>
+
+        <div class="item">
+            <label>email</label>
+            <input type="text" id="email" value="" />
+        </div>
+
+        <div class="item">
+            <label>telp</label>
+            <input type="text" id="telp" value="" />
+        </div>
+        
+        <div class="item">
+            <label>alamat</label>
+            <input type="text" id="alamat" value="" />
+        </div>
+       
+        <div class="item">
+            <input type="button" id="update" class="button button-block" value="Update" />
+            <input type="button" id="delete" class="button button-block" value="Delete" />
+        </div>
+    </div>
+</body>
+
+</html>

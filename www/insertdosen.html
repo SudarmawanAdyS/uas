@@ -1,0 +1,105 @@
+<html>
+
+<head>    <style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+</style>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var nip= $("#nip").val();
+            var nama = $("#nama").val();
+            var email = $("#email").val();
+            var telp = $("#telp").val();
+            var alamat = $("#alamat").val();
+            
+            var dataString = "nip=" + nip + "&nama=" + nama + "&email=" + email +"&telp=" + telp +  "&alamat=" + alamat +  "&insert=";
+            if ($.trim(nip).length > 0 & $.trim(nama).length > 0 & $.trim(email).length > 0 & $.trim(telp).length > 0  & $.trim(alamat).length > 0 ) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://sisfopkl.000webhostapp.com/uas/cordova/www/insertmhs.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("inserted");
+                            $("#insert").val('submit');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="readjsonpkl.html">Info PKL JSON</a></li>
+                        <li><a href="readjsondosen.html">Dosen JSON</a></li>
+                        <li><a href="readjsonmhs.html">Mahasiswa JSON</a></li>
+                        <li><a href="readjson.html">Baak JSON</a></li>
+</ul>
+    <br/>
+    <br/>
+    <div class="list">
+        
+        <div class="item">
+            <label>nip</label>
+            <input type="text" id="nip" value="" />
+        </div>
+        <div class="item">
+            <label>nama</label>
+            <input type="text" id="nama" value="" />
+        </div>
+        <div class="item">
+            <label>Email</label>
+            <input type="text" id="email" value="" />
+        </div>
+        <div class="item">
+            <label>Telp</label>
+            <input type="text" id="telp" value="" />
+        </div>
+        <div class="item">
+            <label>Alamat</label>
+            <input type="text" id="alamat" value="" />
+        </div>
+        
+        <div class="item">
+            <input type="button" id="insert" class="button button-block" value="Insert" />
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<html>
+
+<head>
+        <style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+</style>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var url = "https://sisfopkl.000webhostapp.com/uas/cordova/www/jsonpkl.php";
+        $.getJSON(url, function(result) {
+            console.log(result);
+            $.each(result, function(i, field) {
+                var id = field.id;
+                var nim = field.nim;
+                var judul = field.judul;
+                var tempat = field.tempat;
+                var alamat_tempat = field.alamat_tempat;
+                
+                $("#listview").append("<a class='item' href='formpkl.html?id=" + id + "&nim=" + nim +  "&tempat=" + tempat +"&judul=" + judul + "&alamat_tempat_tempat=" + alamat_tempat +  "'><span class='item-note'>" + alamat_tempat + "</span><h2>" + nim + " </h2><p>" + tempat + "</p></a>");
+    
+                
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="readjsonpkl.html">Info PKL JSON</a></li>
+                        <li><a href="readjsondosen.html">Dosen JSON</a></li>
+                        <li><a href="readjsonmhs.html">Mahasiswa JSON</a></li>
+                        <li><a href="readjson.html">Baak JSON</a></li>
+
+                        <li ><a href="insertpkl.html">Tambah PKL</a></li >
+</ul>
+
+<center>
+    <h3>Data PKL</h3></center>
+    <ul class="list" id="listview">
+    </ul>
+</body>
+
+</html>
